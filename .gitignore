@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+/home/ilya/2023-MAI-Backend-I-Chernenko/computer_components_store/computer_components_store/settings.py
+
+*settings.py

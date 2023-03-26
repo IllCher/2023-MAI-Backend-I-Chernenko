@@ -17,8 +17,8 @@ class LRUCache:
             del self.cache[key]
         self.cache[key] = value
         if len(self.cache) > self.capacity:
-            fc = next(iter(self.cache))
-            self.cache.pop(fc)
+            first_key = next(iter(self.cache))
+            self.cache.pop(first_key)
 
     def rem(self, key: str) -> None:
         if key in self.cache:

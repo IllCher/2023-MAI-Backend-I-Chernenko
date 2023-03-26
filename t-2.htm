@@ -1,0 +1,75 @@
+<!--Черненко Илья Денисович М8О-106М-22-->
+<!--Сформировать текст по шаблону, в который вставляются элементы, требующие проверки:
+год, дата, время, фамилия, почта, число (в диапазоне)
+Использовать различные типы <input>, таблицу, радиокнопки и т.п.
+Минимальный CSS
+-->
+
+<head>
+    <style>
+        body {
+            background-color: rgb(207, 207, 190);
+        }
+    </style>
+    <script>
+        var new_element = true
+        function gen_html() {
+            if (!base_form.myyear.value) {
+            } else {
+                    const element = document.getElementById('Div1')
+                    if (element) {
+                        element.remove()    
+                    }
+                    var added_html = document.createElement('div')
+                    added_html.setAttribute('id', 'Div1');
+                    new_element = !new_element    
+                added_html.innerHTML = ''
+                added_html.innerHTML +=
+                    'Добрый день меня зовут ' + base_form.mysn.value + ' ' + base_form.myfn.value
+                    + ', я ' + base_form.myyear.value + 'ого года рождения, '
+                    + 'мой опыт работы ' + base_form.mynumber.value
+                if (Number(base_form.mynumber.value) == 1) {
+                    added_html.innerHTML += ' год'
+                } else if (Number(base_form.mynumber.value) < 5) {
+                    added_html.innerHTML += ' года'
+                } else {
+                    added_html.innerHTML += ' лет'
+                }
+                added_html.innerHTML += ' готов работать с '
+                    + String(base_form.mytime.value) + ' мой пол ' + base_form.sex.value
+                    + ' моя почта ' + base_form.myemail.value
+                const appended = document.body.appendChild(added_html)
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <br> Черненко Илья Денисович М8О-106М-22
+    <br> Сформировать текст по шаблону, в который вставляются элементы, требующие проверки:
+    год, дата, время, фамилия, почта, число (в диапазоне)
+    Использовать различные типы input, таблицу, радиокнопки и т.п.
+    Минимальный CSS
+    <form name='base_form'>
+        <br> Год <input name='myyear' type='number' required=True min = 1900 max = 2100>
+        <br> Дата <input name='mydate' type='date' required=True>
+        <br> Время <input name='mytime' type='time' required=True min='09:00' max='18:00'>
+        <br> Фамилия <input name='mysn' type='text' required=True>
+        <br> Имя <input name='myfn' type='text' required=True>
+        <br> Почта <input name='myemail' type='email' required=True>
+        <br> Пол <input id='man' name='sex' type='radio' required=True value = 'мужской'> <label for='man'>Мужской</label> <input
+            id='woman' name='sex' type='radio' required=True value = 'женский'> <label for='woman'>Женский</label>
+
+
+        <br> Опыт работы<input name='mynumber' type='number' required=True min = 0 max = 100>
+        <br> <button id='btn_sbm' type='reset'> Отправить</button>
+        <script>
+            document.getElementById('btn_sbm').addEventListener('click', gen_html)     
+        </script>
+
+    </form>
+
+
+</body>
