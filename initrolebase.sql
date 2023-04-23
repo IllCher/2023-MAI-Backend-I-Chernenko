@@ -1,0 +1,10 @@
+CREATE ROLE admin
+  NOSUPERUSER
+  CREATEDB
+  NOCREATEROLE
+  LOGIN
+  PASSWORD 'helloworld';
+  
+CREATE DATABASE films
+  OWNER admin;
+
