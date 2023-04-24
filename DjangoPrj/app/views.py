@@ -1,8 +1,10 @@
 from django.core.handlers.asgi import HttpRequest, HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def film(request: HttpRequest) -> JsonResponse:
     if request.method == "GET":
         return JsonResponse({"title": "Title"}, status=200)
