@@ -4,6 +4,28 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from .models import Film, Director
+from rest_framework import generics
+from .serializers import DirectorSerializer, FilmSerializer
+
+
+class DirectorList(generics.ListCreateAPIView):
+    queryset = Director.objects.all()
+    serializer_class = DirectorSerializer
+
+
+class DirectorDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Director.objects.all()
+    serializer_class = DirectorSerializer
+
+
+class FilmList(generics.ListCreateAPIView):
+    queryset = Film.objects.all()
+    serializer_class = FilmSerializer
+
+
+class FilmDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Film.objects.all()
+    serializer_class = FilmSerializer
 
 
 @csrf_exempt
