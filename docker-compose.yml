@@ -18,7 +18,7 @@ services:
       - app-network
 
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
     restart: always
 
@@ -31,7 +31,7 @@ services:
     restart: always
 
     ports:
-      - "80:80"
+      - "81:80"
 
     networks:
       - app-network
@@ -47,10 +47,11 @@ services:
       POSTGRES_PASSWORD: helloworld
       POSTGRES_HOST: postgres
 
-    restart: always
+    #restart: always
 
-    #volumes:
-    # - .:/code
+    volumes:
+      - .:/code
+
 
     ports:
       - "8000:8000"
@@ -61,8 +62,8 @@ services:
     depends_on:
       - postgres
 
-    command: sh -c "python3 DjangoPrj/manage.py migrate &&
-                    python3 DjangoPrj/manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python3 2023-MAI-Backend-I-Chernenko/DjangoPrj/manage.py migrate &&
+                    python3 2023-MAI-Backend-I-Chernenko/DjangoPrj/manage.py runserver 0.0.0.0:8000"
 
 networks:
   app-network:
