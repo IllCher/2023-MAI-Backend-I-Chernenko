@@ -1,0 +1,69 @@
+version: "3.3"
+
+services:
+
+  postgres:
+    build:
+      context: Database
+      dockerfile: Dockerfile
+    container_name: postgres
+    environment:
+      POSTGRES_DB: "films"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "helloworld"
+    volumes:
+      - ./data/postgres:/var/lib/posgresql/data
+
+    networks:
+      - app-network
+
+    ports:
+      - "5432:5432"
+
+    restart: always
+
+  nginx:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+
+    restart: always
+
+    ports:
+      - "80:80"
+
+    networks:
+      - app-network
+
+  django:
+    build:
+      context: DjangoPrj
+      dockerfile: Dockerfile
+    container_name: django
+    environment:
+      POSTGRES_NAME: films
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: helloworld
+      POSTGRES_HOST: postgres
+
+    restart: always
+
+    #volumes:
+    # - .:/code
+
+    ports:
+      - "8000:8000"
+
+    networks:
+      - app-network
+
+    depends_on:
+      - postgres
+
+    command: sh -c "python3 DjangoPrj/manage.py migrate &&
+                    python3 DjangoPrj/manage.py runserver 0.0.0.0:8000"
+
+networks:
+  app-network:
+    driver: "bridge"

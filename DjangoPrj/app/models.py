@@ -30,7 +30,7 @@ class Film(models.Model):
         blank=False,
     )
     year = models.IntegerField(null=True, validators=[validate_positive])
-    directiors = models.ManyToManyField(Director)
+    directors = models.ManyToManyField(Director)
 
     class Meta:
         ordering = ["year", "title"]
