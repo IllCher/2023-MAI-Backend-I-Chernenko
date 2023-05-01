@@ -1,5 +1,5 @@
 """
-WSGI config for djangoprj project.
+WSGI config for DjangoPrj project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangoprj.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DjangoPrj.settings')
 
 application = get_wsgi_application()
