@@ -11,14 +11,20 @@ services:
       POSTGRES_DB: "films"
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "helloworld"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
     volumes:
       - ./data/postgres:/var/lib/posgresql/data
 
     networks:
       - app-network
 
+    expose:
+      - "5433"
+
     ports:
-      - "5433:5432"
+      - "5433:5433"
+
+    command: -p 5433
 
     restart: always
 
@@ -31,7 +37,7 @@ services:
     restart: always
 
     ports:
-      - "81:80"
+      - "81:81"
 
     networks:
       - app-network
@@ -42,12 +48,12 @@ services:
       dockerfile: Dockerfile
     container_name: django
     environment:
-      POSTGRES_NAME: films
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: helloworld
-      POSTGRES_HOST: postgres
+      POSTGRES_NAME: "films"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "helloworld"
+      POSTGRES_HOST: "postgres"
 
-    #restart: always
+    restart: always
 
     volumes:
       - .:/code
@@ -62,8 +68,9 @@ services:
     depends_on:
       - postgres
 
-    command: sh -c "python3 2023-MAI-Backend-I-Chernenko/DjangoPrj/manage.py migrate &&
-                    python3 2023-MAI-Backend-I-Chernenko/DjangoPrj/manage.py runserver 0.0.0.0:8000"
+    command: sh -c "export DJANGO_SETTINGS_MODULE=djangoprj.settings &&
+                    python3 DjangoPrj/manage.py migrate &&
+                    python3 DjangoPrj/manage.py runserver 0.0.0.0:8000"
 
 networks:
   app-network:

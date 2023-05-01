@@ -1,4 +1,8 @@
 FROM python:3.8
 
+ENV DJANGO_SETTINGS_MODULE djangoprj.settings
 RUN pip install --upgrade pip
-RUN git clone https://github.com/IllCher/2023-MAI-Backend-I-Chernenko && cd 2023-MAI-Backend-I-Chernenko && pip install -r requirements.txt && cd DjangoPrj && ls -a && python manage.py migrate
+WORKDIR /code
+COPY . /code/
+RUN ls -a
+RUN pip install -r requirements.txt
