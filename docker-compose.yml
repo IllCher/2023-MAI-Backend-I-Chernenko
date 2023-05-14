@@ -67,6 +67,7 @@ services:
 
     depends_on:
       - postgres
+      - nginx
 
     command: sh -c "export DJANGO_SETTINGS_MODULE=djangoprj.settings &&
                     python3 DjangoPrj/manage.py migrate &&
