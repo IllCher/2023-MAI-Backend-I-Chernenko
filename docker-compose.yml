@@ -28,6 +28,7 @@ services:
 
     restart: always
 
+
   nginx:
     build:
       context: nginx
@@ -71,7 +72,14 @@ services:
 
     command: sh -c "export DJANGO_SETTINGS_MODULE=djangoprj.settings &&
                     python3 DjangoPrj/manage.py migrate &&
-                    python3 DjangoPrj/manage.py runserver 0.0.0.0:8000"
+                    python3 DjangoPrj/manage.py runserver 0.0.0.0:8000 &&
+                    python3 DjangoPrj/manage.py migrate social_django"
+
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost:8000/ || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 networks:
   app-network:

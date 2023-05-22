@@ -59,19 +59,21 @@ class FilmTests(TestCase):
         self.assertTrue(Film.objects.filter(title='The Dark Knight').exists())
 
     def test_search(self):
-        FilmFactory(title='Star Wars', year=1977)
-        FilmFactory(title='The Empire Strikes Back star', year=1980)
+        FilmFactory()
+        FilmFactory(title='The Empire Strikes Back star Film', year=1980)
         FilmFactory(title='Return of the Jedi', year=1983)
 
-        response = self.client.get('/api/search?query=star')
+        response = self.client.get('/api/search?query=Film')
 
         self.assertEqual(response.status_code, 200)
         data = response.json()['data']
-        self.assertEqual(len(data), 2)
-        self.assertEqual(data[0]['title'], 'Star Wars')
-        self.assertEqual(data[0]['year'], 1977)
-        self.assertEqual(data[1]['title'], 'The Empire Strikes Back star')
-        self.assertEqual(data[1]['year'], 1980)
+        self.assertEqual(len(data), 3)
+        self.assertEqual(data[0]['title'], 'The Empire Strikes Back star Film')
+        self.assertEqual(data[0]['year'], 1980)
+        self.assertEqual(data[1]['title'], 'Film 2')
+        self.assertEqual(data[1]['year'], 2002)
+        self.assertEqual(data[2]['title'], 'Film 3')
+        self.assertEqual(data[2]['year'], 2003)
 
     # mock
     @patch('app.models.Film.objects.filter')

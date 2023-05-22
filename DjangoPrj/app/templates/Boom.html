@@ -2,11 +2,19 @@
 <h1 style="text-align:center">
   Boom
 </h1>
+    <button>
+        <a href="{% url 'social:begin' 'vk-oauth2' %}">Login via VK</a>
+    </button>
+    <button>
+        <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a>
+    </button>
 <p>
   {% load static %}
   <img style="display: block; margin-left: auto; margin-right: auto;" src="{% static 'images/Boom.gif' %}"
     alt="Boom" width="200" height="200" />
   <button id="myButton" style="display: block; margin-left: auto; margin-right: auto;" onclick="changeName()">Click me</button>
+
+
 </p>
 <script>
 function changeName() {

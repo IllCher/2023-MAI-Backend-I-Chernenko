@@ -1,13 +1,17 @@
+from django.contrib.auth.decorators import login_required
 from django.core.handlers.asgi import HttpRequest, HttpResponse
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.http import JsonResponse, HttpResponseForbidden
+from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
+from social_core.backends.github import GithubOAuth2
 
 from .models import Film, Director
 from rest_framework import generics
 from .serializers import DirectorSerializer, FilmSerializer
+
+from .decorators import *
 
 
 class DirectorList(generics.ListCreateAPIView):
@@ -61,6 +65,7 @@ class FilmDetail(generics.RetrieveUpdateDestroyAPIView):
 
 @csrf_exempt
 @require_http_methods(["GET"])
+@api_auth_required("github")
 def search(request: HttpRequest) -> JsonResponse:
     search_query = request.GET.get("query")
     films = Film.objects.filter(title__icontains=search_query)
@@ -85,6 +90,7 @@ def add_film(request: HttpRequest) -> JsonResponse:
 
 @csrf_exempt
 @require_http_methods(["GET"])
+@api_auth_required("github")
 def get_all(request: HttpRequest) -> JsonResponse:
     films = Film.objects.all()
     data = [{"id": str(f.id), "title": f.title, "year": f.year} for f in films]
@@ -93,3 +99,7 @@ def get_all(request: HttpRequest) -> JsonResponse:
 
 def home(request: HttpRequest) -> HttpResponse:
     return render(request, "Boom.html")
+
+
+def login_view(request: HttpRequest) -> HttpResponse:
+    return render(request, "home.html")
